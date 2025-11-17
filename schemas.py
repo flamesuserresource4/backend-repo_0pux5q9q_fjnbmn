@@ -11,8 +11,9 @@ Model name is converted to lowercase for the collection name:
 - BlogPost -> "blogs" collection
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 from typing import Optional
+from datetime import date, time
 
 # Example schemas (replace with your own):
 
@@ -37,6 +38,23 @@ class Product(BaseModel):
     price: float = Field(..., ge=0, description="Price in dollars")
     category: str = Field(..., description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+
+# Restaurant-specific schemas
+
+class Reservation(BaseModel):
+    """
+    Reservations collection schema
+    Collection name: "reservation"
+    """
+    nome: str = Field(..., description="Nome")
+    cognome: str = Field(..., description="Cognome")
+    email: EmailStr = Field(..., description="Email")
+    telefono: str = Field(..., description="Telefono")
+    data: date = Field(..., description="Data della prenotazione")
+    ora: time = Field(..., description="Ora della prenotazione")
+    persone: int = Field(..., ge=1, le=20, description="Numero di persone")
+    note: Optional[str] = Field(None, description="Note aggiuntive")
+    consensi_marketing: Optional[bool] = Field(False, description="Consenso opzionale marketing")
 
 # Add your own schemas here:
 # --------------------------------------------------
